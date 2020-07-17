@@ -11,7 +11,7 @@ export default defineConfig({
   antd: {
     compact: false,
   },
-
+  dynamicImport: {},
   routes: [
     {
       path: '/',
