@@ -25,7 +25,7 @@ class DemoLayout extends React.Component<any, any> {
           <Menu theme="dark" defaultSelectedKeys={this.props.selectedMenuKeys} mode="inline"
                 selectedKeys={this.props.history.location.pathname}>
             {
-              this.props.route.routes.filter((it: any) => it !== '/').map((it: any) => {
+              this.props.route.routes.filter((it: any) => it.path !== '/').map((it: any) => {
                 return (
                   <Menu.Item key={it.key}>
                     <Link to={it.path} key={it.key}>
