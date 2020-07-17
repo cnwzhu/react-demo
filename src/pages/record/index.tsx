@@ -4,6 +4,6 @@ type Props = {}
 
 export default function Index({}: Props) {
   return (<div>
-    className="map"
+    className="record"/
   </div>);
 }
