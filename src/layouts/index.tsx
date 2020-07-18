@@ -1,5 +1,6 @@
 import { Avatar, Layout, Menu } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, YoutubeOutlined } from '@ant-design/icons';
+import * as Icon from '@ant-design/icons';
 import React from 'react';
 import { Link } from 'umi';
 
@@ -7,7 +8,6 @@ const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 class DemoLayout extends React.Component<any, any> {
-
   state = {
     collapsed: false,
   };
@@ -20,32 +20,59 @@ class DemoLayout extends React.Component<any, any> {
   render() {
     return (
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-          <div className="logo"/>
-          <Menu theme="dark" defaultSelectedKeys={this.props.selectedMenuKeys} mode="inline"
-                selectedKeys={this.props.history.location.pathname}>
-            {
-              this.props.route.routes.filter((it: any) => it.path !== '/').map((it: any) => {
+        <Sider
+          collapsible
+          collapsed={this.state.collapsed}
+          onCollapse={this.onCollapse}
+        >
+          <div className="logo">
+            <YoutubeOutlined />
+          </div>
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={this.props.selectedMenuKeys}
+            mode="inline"
+            selectedKeys={this.props.history.location.pathname}
+          >
+            {this.props.route.routes
+              .filter((it: any) => it.path !== '/')
+              .map((it: any) => {
                 return (
                   <Menu.Item key={it.key}>
                     <Link to={it.path} key={it.key}>
+                      {React.createElement(
+                        // @ts-ignore
+                        Icon[it.icon],
+                        {},
+                      )}
                       <span>{it.title}</span>
                     </Link>
                   </Menu.Item>
                 );
-              })
-            }
+              })}
           </Menu>
         </Sider>
         <Layout className="site-layout">
-          <Header className="site-layout-background"
-                  style={{ padding: ' 0 20', display: 'flex', justifyContent: 'flex-end' }}>
+          <Header
+            className="site-layout-background"
+            style={{
+              padding: ' 0 20',
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
             <div>
-              <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined/>}/>
+              <Avatar
+                style={{ backgroundColor: '#87d068' }}
+                icon={<UserOutlined />}
+              />
             </div>
           </Header>
           <Content style={{ margin: '16px 16px 0' }}>
-            <div className="site-layout-background" style={{ padding: 24, height: '100%' }}>
+            <div
+              className="site-layout-background"
+              style={{ padding: 24, height: '100%' }}
+            >
               {this.props.children}
             </div>
           </Content>
