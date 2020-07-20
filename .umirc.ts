@@ -12,6 +12,12 @@ export default defineConfig({
     compact: false,
   },
   dynamicImport: {},
+  proxy: {
+    '/api': {
+      target: 'http://localhost:9090',
+      changeOrigin: true,
+    },
+  },
   routes: [
     {
       path: '/',
