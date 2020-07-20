@@ -12,6 +12,10 @@ export default defineConfig({
     compact: false,
   },
   dynamicImport: {},
+  locale: {
+    default: 'zh-CN',
+    antd: true,
+  },
   proxy: {
     '/api': {
       target: 'http://localhost:9090',

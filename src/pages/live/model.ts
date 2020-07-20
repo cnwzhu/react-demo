@@ -1,5 +1,5 @@
 import { Effect, Reducer, Subscription } from 'umi';
-import { livePageQuery } from '@/pages/live/service';
+import { pageQuery } from '@/pages/live/service';
 
 interface LiveModelType {
   namespace: string,
@@ -18,6 +18,7 @@ interface LiveModelType {
 }
 
 interface LiveItem {
+  key: number,
   'id': number,
   'action': string,
   'clientId': number,
@@ -46,7 +47,7 @@ interface _LiveItem {
 }
 
 interface LiveState {
-
+  liveItems: LiveItem[]
 }
 
 const LiveModel: LiveModelType = {
@@ -56,7 +57,7 @@ const LiveModel: LiveModelType = {
   },
   effects: {
     * pageQuery({ payload }, { call, put }) {
-      const ret = yield call(livePageQuery, {});
+      const ret = yield call(pageQuery, {});
       yield put({
         type: '_pageQuery',
         payload: ret.data,
@@ -68,6 +69,7 @@ const LiveModel: LiveModelType = {
       return {
         liveItems: payload.map((it: _LiveItem) => {
           return {
+            key: it.id,
             id: it.id,
             action: it.action,
             clientId: it.client_id,

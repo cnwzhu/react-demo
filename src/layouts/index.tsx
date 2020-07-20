@@ -31,7 +31,7 @@ class DemoLayout extends React.Component<any, any> {
             ) : (
               <div className={'logo-jet'}>
                 <div className={'logo1'}/>
-                <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>JET</div>
+                <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>JET STDIO</div>
               </div>
             )}
 

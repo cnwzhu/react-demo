@@ -61,7 +61,6 @@ class LivePage extends React.Component<any, any> {
 }
 
 const mapStateToProps = ({ live, loading }: { live: any; loading: Loading }) => {
-  console.log(loading)
   return {
     ...live,
     loading: loading.models.live,
