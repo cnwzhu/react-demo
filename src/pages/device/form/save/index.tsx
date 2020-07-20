@@ -28,9 +28,6 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
       this.props.add(value);
     };
 
-    const onFinishFailed = (error: any) => {
-      console.log('Failed:', error);
-    };
     const detail = this.props.deviceDetail ? this.props.deviceDetail : {};
     return (
       <Modal
@@ -48,7 +45,6 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
             remember: true,
           }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="id"

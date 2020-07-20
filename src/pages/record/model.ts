@@ -2,6 +2,8 @@ import { Effect, Reducer, Subscription } from '@@/plugin-dva/connect';
 import { pageQuery } from '@/pages/record/service';
 
 interface RecordState {
+  recordVideoVisible: boolean
+  videoRecord: RecordItem
 }
 
 interface RecordItem {
@@ -48,7 +50,9 @@ interface RecordModelType {
     pageQuery: Effect
   }
   reducers: {
-    _pageQuery: Reducer
+    _pageQuery: Reducer,
+    openVideo: Reducer,
+    closeVideo: Reducer
   }
   subscriptions: {
     setup: Subscription
@@ -92,6 +96,21 @@ const RecordModel: RecordModelType = {
             endTs: it.end_ts,
           };
         }),
+      };
+    },
+    openVideo(state: RecordState, { payload }) {
+      return {
+        ...state,
+        videoRecord: payload,
+        recordVideoVisible: true,
+      };
+    },
+
+    closeVideo(state: RecordState, { payload }) {
+      return {
+        ...state,
+        recordVideoVisible: false,
+        videoRecord: null,
       };
     },
   },

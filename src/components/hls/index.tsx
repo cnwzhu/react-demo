@@ -8,7 +8,7 @@ interface HlsProps {
 }
 
 export default class Hls extends React.Component<HlsProps, {}> {
-  private readonly player: video.Player;
+  private player?: video.Player;
   private readonly playerOptions: video.PlayerOptions;
   private readonly source: video.Tech.SourceObject;
 
@@ -21,8 +21,6 @@ export default class Hls extends React.Component<HlsProps, {}> {
       src: this.props.videoUrl,
       type: 'application/x-mpegURL',
     };
-    this.player = video(this.props.videoId, this.playerOptions);
-    this.player.src(this.source);
   }
 
   render() {
@@ -37,7 +35,8 @@ export default class Hls extends React.Component<HlsProps, {}> {
   }
 
   componentDidMount() {
-    this.player.play();
+    this.player = video(this.props.videoId, this.playerOptions);
+    this.player.src(this.source);
   }
 
   componentWillUnmount() {

@@ -1,20 +1,9 @@
 import { Effect, Reducer, Subscription } from 'umi';
 import { pageQuery } from '@/pages/live/service';
 
-interface LiveModelType {
-  namespace: string,
-  state: {
-    liveItems: LiveItem[]
-  },
-  effects: {
-    pageQuery: Effect
-  }
-  reducers: {
-    _pageQuery: Reducer
-  }
-  subscriptions: {
-    setup: Subscription
-  }
+interface LiveState {
+  liveItems: LiveItem[]
+  liveVideoVisible: boolean
 }
 
 interface LiveItem {
@@ -46,8 +35,22 @@ interface _LiveItem {
   'push_edate': string
 }
 
-interface LiveState {
-  liveItems: LiveItem[]
+interface LiveModelType {
+  namespace: string,
+  state: {
+    liveItems: LiveItem[]
+  },
+  effects: {
+    pageQuery: Effect
+  }
+  reducers: {
+    _pageQuery: Reducer,
+    openVideo: Reducer,
+    closeVideo: Reducer
+  }
+  subscriptions: {
+    setup: Subscription
+  }
 }
 
 const LiveModel: LiveModelType = {
@@ -84,6 +87,22 @@ const LiveModel: LiveModelType = {
             pushEDate: it.push_edate,
           };
         }),
+      };
+    },
+
+    openVideo(state: LiveState, { payload }) {
+      return {
+        ...state,
+        videoRecord: payload,
+        liveVideoVisible: true,
+      };
+    },
+
+    closeVideo(state: LiveState, { payload }) {
+      return {
+        ...state,
+        liveVideoVisible: false,
+        videoRecord: null,
       };
     },
   },

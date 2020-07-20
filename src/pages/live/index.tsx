@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect, Loading } from 'umi';
-import { Button, Table, Tooltip } from 'antd';
+import { Button, Modal, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { YoutubeOutlined } from '@ant-design/icons';
+import Flv from '@/components/flv';
 
 class LivePage extends React.Component<any, any> {
   private readonly columns: ColumnsType<any>;
@@ -37,7 +38,10 @@ class LivePage extends React.Component<any, any> {
               <Button type="primary" shape="circle" icon={<YoutubeOutlined/>}
                       disabled={record.pushFlag !== 1}
                       onClick={() => {
-                        this.props.openLiveVideo(record);
+                        this.props.dispatch({
+                          type: 'live/openVideo',
+                          payload: record,
+                        });
                       }}
               />
             </Tooltip>
@@ -54,6 +58,28 @@ class LivePage extends React.Component<any, any> {
                dataSource={this.props.liveItems}
                loading={this.props.loading}
         />
+        {
+          this.props.liveVideoVisible ? (
+            <Modal
+              title="直播"
+              visible={this.props.liveVideoVisible}
+              closable={true}
+              onCancel={()=>{
+                this.props.dispatch({
+                  type: 'live/closeVideo',
+                });
+              }}
+              destroyOnClose={true}
+              footer={null}
+            >
+              <Flv videoId={this.props.videoRecord.stream}
+                   videoRef={this.props.videoRecord.stream}
+                   controls={true}
+                   videoUrl={`http://${this.props.videoRecord.vhost}:18080/${this.props.videoRecord.app}/${this.props.videoRecord.stream}.flv`}
+              />
+            </Modal>
+          ) : <></>
+        }
       </div>
     );
   }
