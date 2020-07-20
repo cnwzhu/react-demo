@@ -32,7 +32,7 @@ export default defineConfig({
           component: 'map',
           title: '地图',
           key: 'map',
-          icon: 'UserOutlined',
+          icon: 'EnvironmentOutlined',
         },
         {
           exact: true,
@@ -56,7 +56,7 @@ export default defineConfig({
           component: 'device',
           title: '设备',
           key: 'device',
-          icon: 'SettingOutlined',
+          icon: 'MobileOutlined',
         },
       ],
     },

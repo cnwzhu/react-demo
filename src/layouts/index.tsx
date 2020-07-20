@@ -1,19 +1,18 @@
 import { Avatar, Layout, Menu } from 'antd';
-import { UserOutlined, YoutubeOutlined } from '@ant-design/icons';
 import * as Icon from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import React from 'react';
 import { Link } from 'umi';
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 class DemoLayout extends React.Component<any, any> {
+
   state = {
     collapsed: false,
   };
 
   onCollapse = (collapsed: any) => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
 
@@ -24,10 +23,18 @@ class DemoLayout extends React.Component<any, any> {
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
+          style={{ width: 100 }}
         >
-          <div className="logo">
-            <YoutubeOutlined />
-          </div>
+          {this.state.collapsed ?
+            (
+              <div className={'logo'}/>
+            ) : (
+              <div className={'logo-jet'}>
+                <div className={'logo1'}/>
+                <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>JET</div>
+              </div>
+            )}
+
           <Menu
             theme="dark"
             defaultSelectedKeys={this.props.selectedMenuKeys}
@@ -63,8 +70,7 @@ class DemoLayout extends React.Component<any, any> {
           >
             <div>
               <Avatar
-                style={{ backgroundColor: '#87d068' }}
-                icon={<UserOutlined />}
+                icon={<UserOutlined/>}
               />
             </div>
           </Header>
@@ -77,7 +83,7 @@ class DemoLayout extends React.Component<any, any> {
             </div>
           </Content>
           <Footer style={{ textAlign: 'center', padding: '10px' }}>
-            <div>Ant Design ©2020</div>
+            <div>JET ©2020</div>
           </Footer>
         </Layout>
       </Layout>
