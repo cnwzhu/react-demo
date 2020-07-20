@@ -67,6 +67,7 @@ const LiveModel: LiveModelType = {
   reducers: {
     _pageQuery(state: LiveState, { payload }) {
       return {
+        ...state,
         liveItems: payload.map((it: _LiveItem) => {
           return {
             key: it.id,

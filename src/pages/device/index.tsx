@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect, Loading } from 'umi';
-import { Divider, Modal, Table, Tooltip } from 'antd';
+import { Button, Divider, Modal, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import QueryForm from '@/pages/device/form/query';
+import DeviceSaveForm from '@/pages/device/form/save';
+import DeviceQueryForm from '@/pages/device/form/query';
 
 class DevicePage extends React.Component<any, any> {
   private readonly columns: ColumnsType<any>;
@@ -78,7 +79,10 @@ class DevicePage extends React.Component<any, any> {
               <EditOutlined
                 style={{ fontSize: '20px', marginLeft: '5px' }}
                 onClick={() => {
-                  this.props.openEdit(record);
+                  this.props.dispatch({
+                    type: 'device/showEdit',
+                    payload: record,
+                  });
                 }}>
               </EditOutlined>
             </Tooltip>
@@ -91,25 +95,43 @@ class DevicePage extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <QueryForm deviceDetail={{}}
-                   onFinish={() => {
-                   }}
-                   onFinishFailed={() => {
-                   }}
-                   openEdit={() => {
-                   }}
-                   deviceQueryParam={{
-                     onlineState: 1,
-                     pushState: 'string',
-                     dateRange: [],
-                   }}
-        />
-        <Divider/>
-        <Table columns={this.columns}
-               dataSource={this.props.deviceItems}
-               loading={this.props.loading}
+        <div style={{ display: 'flex', justifyContent: 'start' }}>
+          <Button onClick={() => {
+            this.props.dispatch({
+              type: 'device/showEdit',
+            });
+          }}>
+            添加
+          </Button>
+          <DeviceQueryForm
+            deviceQueryParam={{
+              onlineState: 1,
+              pushState: 'string',
+              dateRange: [],
+            }}
+            query={() => {
 
+            }}
+          />
+        </div>
+        <Divider/>
+        <Table
+          columns={this.columns}
+          dataSource={this.props.deviceItems}
+          loading={this.props.loading}
         />;
+        {this.props.deviceEditVisible ?
+          <DeviceSaveForm
+            add={(value: any) => {
+
+            }}
+            closeEdit={() => {
+              this.props.dispatch({
+                type: 'device/closeEdit',
+              });
+            }}
+            deviceDetail={this.props.deviceDetail}
+          /> : <></>}
       </div>
     );
   }

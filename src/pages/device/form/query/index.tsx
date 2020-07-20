@@ -2,18 +2,15 @@ import React, { Ref } from 'react';
 import { Button, DatePicker, Form, Select } from 'antd';
 
 interface Props {
-  deviceDetail: any,
   deviceQueryParam: {
     onlineState: number
     pushState: string
     dateRange: any[]
   },
-  onFinish: () => void
-  onFinishFailed: () => void
-  openEdit: (item: any) => void
+  query: (param: any) => void
 }
 
-export default class QueryForm extends React.Component<Props, any> {
+export default class DeviceQueryForm extends React.Component<Props, any> {
   private readonly formRef: Ref<any>;
 
   constructor(props: Props) {
@@ -26,19 +23,12 @@ export default class QueryForm extends React.Component<Props, any> {
       <Form
         style={{
           display: 'flex',
+          marginLeft:'10px'
         }}
-        onFinish={this.props.onFinish}
-        onFinishFailed={this.props.onFinishFailed}
+        onFinish={this.props.query}
         ref={this.formRef}
         layout="inline">
-        <div style={{display: 'flex',justifySelf: 'start'}}>
-          <Form.Item>
-            <Button onClick={() => {
-              this.props.openEdit(this.props.deviceDetail);
-            }}>
-              添加
-            </Button>
-          </Form.Item>
+        <div style={{ display: 'flex', justifySelf: 'start' }}>
           <Form.Item
             label="是否在线"
             name="onlineState"
@@ -69,7 +59,7 @@ export default class QueryForm extends React.Component<Props, any> {
             <DatePicker.RangePicker/>
           </Form.Item>
         </div>
-        <div style={{display: 'flex',justifySelf: 'end'}}>
+        <div style={{ display: 'flex', justifySelf: 'end' }}>
           <Form.Item>
             <Button type={'primary'} htmlType={'submit'}>
               查询

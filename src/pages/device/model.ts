@@ -3,6 +3,8 @@ import { pageQuery } from '@/pages/device/service';
 
 
 interface DeviceState {
+  deviceEditVisible: boolean
+  deviceDetail: any
 }
 
 interface DeviceItem {
@@ -40,6 +42,8 @@ interface DeviceModelType {
   }
   reducers: {
     _pageQuery: Reducer
+    showEdit: Reducer
+    closeEdit: Reducer
   }
   subscriptions: {
     setup: Subscription
@@ -68,6 +72,7 @@ const DeviceModel: DeviceModelType = {
   reducers: {
     _pageQuery(state: DeviceState, { payload }) {
       return {
+        ...state,
         deviceItems: payload.records.map((it: _DeviceItem) => {
           return {
             key: it.id,
@@ -82,6 +87,20 @@ const DeviceModel: DeviceModelType = {
             updatedAt: it.updated_at,
           };
         }),
+      };
+    },
+    showEdit(state: DeviceState, { payload }) {
+      return {
+        ...state,
+        deviceEditVisible: true,
+        deviceDetail: payload,
+      };
+    },
+    closeEdit(state: DeviceState, { payload }) {
+      return {
+        ...state,
+        deviceEditVisible: false,
+        deviceDetail: null,
       };
     },
   },

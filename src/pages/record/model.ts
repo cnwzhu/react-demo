@@ -72,6 +72,7 @@ const RecordModel: RecordModelType = {
   reducers: {
     _pageQuery(state: RecordState, { payload }) {
       return {
+        ...state,
         recordItems: payload.map((it: _RecordItem) => {
           return {
             key: it.id,
