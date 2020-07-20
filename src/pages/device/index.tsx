@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect, Loading } from 'umi';
-import { Divider, Modal, Table } from 'antd';
+import { Divider, Modal, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import QueryForm from '@/pages/device/form/query';
@@ -57,26 +57,31 @@ class DevicePage extends React.Component<any, any> {
         key: 'watch',
         render: (record) => {
           return <div>
-            <DeleteOutlined
-              style={{ fontSize: '20px' }}
-              onClick={() => {
-                Modal.confirm(
-                  {
-                    title: '警告',
-                    content: '确定删除吗',
-                    onOk: () => {
-                      this.props.delete(record.id);
+            <Tooltip title="删除">
+              <DeleteOutlined
+                style={{ fontSize: '20px' }}
+                onClick={() => {
+                  Modal.confirm(
+                    {
+                      title: '警告',
+                      content: '确定删除吗',
+                      onOk: () => {
+                        this.props.delete(record.id);
+                      },
+                      okText: '确定',
+                      cancelText: '取消',
                     },
-                    okText: '确定',
-                    cancelText: '取消',
-                  },
-                );
-              }}/>
-            <EditOutlined
-              style={{ fontSize: '20px', marginLeft: '5px' }}
-              onClick={() => {
-                this.props.openEdit(record);
-              }}/>
+                  );
+                }}/>
+            </Tooltip>
+            <Tooltip title="编辑">
+              <EditOutlined
+                style={{ fontSize: '20px', marginLeft: '5px' }}
+                onClick={() => {
+                  this.props.openEdit(record);
+                }}>
+              </EditOutlined>
+            </Tooltip>
           </div>;
         },
       },

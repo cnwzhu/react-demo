@@ -48,7 +48,6 @@ class LivePage extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.props.loading)
     return (
       <div>
         <Table columns={this.columns}
