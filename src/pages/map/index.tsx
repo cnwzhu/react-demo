@@ -83,7 +83,7 @@ class MapPage extends React.Component<any, any> {
     return (
       <div style={{ width: '100%', height: '80%' }}>
         <Map plugins={['ToolBar']}
-             zoom={10}
+             zoom={12}
              center={this.mapCenter}
              amapkey={'5ed31dcef8805f7574cf3d7247cb9cbe'}>
           <Markers
