@@ -2,7 +2,7 @@ import { Avatar, Layout, Menu, Popover } from 'antd';
 import * as Icon from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import React from 'react';
-import { Link } from 'umi';
+import { Link ,history} from 'umi';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -29,7 +29,9 @@ class DemoLayout extends React.Component<any, any> {
             (
               <div className={'logo'}/>
             ) : (
-              <div className={'logo-jet'}>
+              <div className={'logo-jet'} onClick={()=>{
+                history.push('/');
+              }}>
                 <div className={'logo1'}/>
                 <div style={{ marginTop: 'auto', marginBottom: 'auto' }}>JET STDIO</div>
               </div>

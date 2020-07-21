@@ -1,5 +1,6 @@
 import { Effect, Reducer, Subscription } from '@@/plugin-dva/connect';
 import { del, pageQuery, save } from '@/pages/device/service';
+import { message } from 'antd';
 
 
 interface DeviceState {
@@ -78,6 +79,11 @@ const DeviceModel: DeviceModelType = {
       const ret = yield call(save, {
         ...payload,
       });
+      if (ret.state === 200) {
+        message.success('保存成功');
+      } else {
+        message.error('保存失败');
+      }
       yield put({
         type: 'pageQuery',
       });
@@ -86,6 +92,11 @@ const DeviceModel: DeviceModelType = {
       const ret = yield call(del, {
         ...payload,
       });
+      if (ret.state === 200) {
+        message.success('删除成功');
+      } else {
+        message.error('删除失败');
+      }
       yield put({
         type: 'pageQuery',
       });

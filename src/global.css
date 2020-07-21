@@ -17,7 +17,7 @@ code {
 
 .logo {
   height: 32px;
-  background: url(https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg);
+  background-image: url(https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg);
   background-size: contain;
   background-repeat: no-repeat;
   color: azure;
@@ -27,7 +27,7 @@ code {
 .logo1 {
   height: 32px;
   width: 30px;
-  background: url(https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg);
+  background-image: url(https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg);
   background-size: contain;
   background-repeat: no-repeat;
   color: azure;
@@ -37,6 +37,10 @@ code {
 .logo-jet {
   color: #cbe6ff;
   display: flex;
+}
+
+.logo-jet:hover {
+  cursor: pointer;
 }
 
 .site-layout .site-layout-background {
