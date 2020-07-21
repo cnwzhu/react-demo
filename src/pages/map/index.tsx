@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 import { Map, Markers } from 'react-amap';
 import { Loading } from '@@/plugin-dva/connect';
 import { connect } from 'umi';
-import { Avatar, Card, Col, Modal, Row } from 'antd';
+import { Card, Col, Divider, Modal, Row } from 'antd';
 import Flv from '@/components/flv';
-
-type Props = {}
 
 class MapPage extends React.Component<any, any> {
   private readonly mapCenter: { latitude: number; longitude: number };
@@ -15,6 +13,8 @@ class MapPage extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);
+    // @ts-ignore
+    const flvBaseUrl = FLV_BASE_URL;
     this.mapCenter = { longitude: 118.79585266113283, latitude: 32.058789484402304 };
     this.container = document.createElement('div');
     document.body.appendChild(this.container);
@@ -35,7 +35,7 @@ class MapPage extends React.Component<any, any> {
               <Flv videoId={data.commonCode}
                    videoRef={data.commonCode}
                    controls={true}
-                   videoUrl={`http://192.168.31.67:18080/live/${data.commonCode}.flv`}
+                   videoUrl={`${flvBaseUrl}/${data.commonCode}.flv`}
               />
             </Modal>, this.container);
         } else {
@@ -53,11 +53,11 @@ class MapPage extends React.Component<any, any> {
       this.props.dispatch({
         type: 'map/queryAll',
       });
-    }, 30000);
+    }, 5000);
   }
 
   render() {
-    const { allDevice } = this.props;
+    const allDevice = this.props.allDevice ? this.props.allDevice : [];
     const redIcon: any = {
       background: `url(${require('@/assets/location-off.svg')})`,
       backgroundSize: 'contain',
@@ -82,7 +82,10 @@ class MapPage extends React.Component<any, any> {
     };
     return (
       <div style={{ width: '100%', height: '80%' }}>
-        <Map plugins={['ToolBar']} zoom={10} center={this.mapCenter}>
+        <Map plugins={['ToolBar']}
+             zoom={10}
+             center={this.mapCenter}
+             amapkey={'5ed31dcef8805f7574cf3d7247cb9cbe'}>
           <Markers
             markers={allDevice.map((it: any) => ({
               position: {
@@ -97,21 +100,22 @@ class MapPage extends React.Component<any, any> {
             }}
           />
         </Map>
+        <Divider orientation="left">设备状态</Divider>
         <div className="site-card-wrapper">
           <Row gutter={16}>
             <Col span={8}>
-              <Card title="所有设备" bordered={false}>
-                <Avatar size={50}>{allDevice.length}</Avatar>
+              <Card title="所有设备" bordered={false} size={'small'}>
+                {allDevice.length}
               </Card>
             </Col>
             <Col span={8}>
-              <Card title="在线设备" bordered={false}>
-                <Avatar size={50}>{allDevice.filter((it: any) => it.offlineFlag === 1).length}</Avatar>
+              <Card title="在线设备" bordered={false} size={'small'}>
+                {allDevice.filter((it: any) => it.offlineFlag === 1).length}
               </Card>
             </Col>
             <Col span={8}>
-              <Card title="推流设备" bordered={false}>
-                <Avatar size={50}>{allDevice.filter((it: any) => it.pushFlag === 1).length}</Avatar>
+              <Card title="推流设备" bordered={false} size={'small'}>
+                {allDevice.filter((it: any) => it.pushFlag === 1).length}
               </Card>
             </Col>
           </Row>

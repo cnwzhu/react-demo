@@ -1,5 +1,5 @@
 import { Effect, Reducer, Subscription } from '@@/plugin-dva/connect';
-import { pageQuery } from '@/pages/device/service';
+import { del, pageQuery, save } from '@/pages/device/service';
 
 
 interface DeviceState {
@@ -39,6 +39,8 @@ interface DeviceModelType {
   },
   effects: {
     pageQuery: Effect,
+    save: Effect
+    del: Effect
   }
   reducers: {
     _pageQuery: Reducer,
@@ -58,14 +60,34 @@ const DeviceModel: DeviceModelType = {
   effects: {
     * pageQuery({ payload }, { call, put }) {
       const ret = yield call(pageQuery, {
+        ...payload,
         pageable: {
           page: 1,
           page_count: 10,
         },
       });
       yield put({
+        type: 'closeEdit',
+      });
+      yield put({
         type: '_pageQuery',
         payload: ret.data,
+      });
+    },
+    * save({ payload }, { call, put }) {
+      const ret = yield call(save, {
+        ...payload,
+      });
+      yield put({
+        type: 'pageQuery',
+      });
+    },
+    * del({ payload }, { call, put }) {
+      const ret = yield call(del, {
+        ...payload,
+      });
+      yield put({
+        type: 'pageQuery',
       });
     },
   },

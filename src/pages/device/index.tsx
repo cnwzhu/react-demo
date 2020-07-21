@@ -57,13 +57,18 @@ class DevicePage extends React.Component<any, any> {
         key: 'watch',
         render: (record) => {
           return <Space size="middle">
-            <a onClick={() => {
+            <a style={{ color: 'red' }} onClick={() => {
               Modal.confirm(
                 {
                   title: '警告',
                   content: '确定删除吗',
                   onOk: () => {
-                    this.props.delete(record.id);
+                    this.props.dispatch({
+                      type: 'device/del',
+                      payload:{
+                        id:record.id
+                      },
+                    });
                   },
                   okText: '确定',
                   cancelText: '取消',
@@ -96,15 +101,20 @@ class DevicePage extends React.Component<any, any> {
             添加
           </Button>
           <DeviceQueryForm
-            deviceQueryParam={{
-              onlineState: 1,
-              pushState: 'string',
-              dateRange: [],
+            query={(value: any) => {
+              this.props.dispatch({
+                type: 'device/pageQuery',
+                payload: {
+                  online_state: value.onlineState,
+                  push_state: value.pushState,
+                  device_add_date_start: !value.dateRange ? null : value.dateRange[0] ? value.dateRange[0].format('yyyy-MM-DD') : null,
+                  device_add_date_end: !value.dateRange ? null : value.dateRange[1] ? value.dateRange[1].format('yyyy-MM-DD') : null,
+                },
+              });
             }}
-            query={() => {
-
-            }}
-          />
+            reset={() => this.props.dispatch({
+              type: 'device/pageQuery',
+            })}/>
         </Space>
         <Divider/>
         <Table
@@ -115,11 +125,22 @@ class DevicePage extends React.Component<any, any> {
         {this.props.deviceEditVisible ?
           <DeviceSaveForm
             add={(value: any) => {
-
+              this.props.dispatch({
+                type: 'device/save',
+                payload: {
+                  id: value.id,
+                  common_code: value.commonCode,
+                  infrared_code: value.infraredCode,
+                  name: value.name,
+                },
+              });
             }}
             closeEdit={() => {
               this.props.dispatch({
                 type: 'device/closeEdit',
+              });
+              this.props.dispatch({
+                type: 'device/pageQuery',
               });
             }}
             deviceDetail={this.props.deviceDetail}

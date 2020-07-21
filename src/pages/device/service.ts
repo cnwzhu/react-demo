@@ -19,6 +19,20 @@ export async function pageQuery(params: DevicePageQueryParam) {
   });
 }
 
+export async function save(params: any) {
+  return request('/api/v1/device/save', {
+    method: 'POST',
+    data: { ...params },
+    requestType: 'json',
+  });
+}
+
+export async function del(params: any) {
+  return request(`/api/v1/device/delete/${params.id}`, {
+    method: 'DELETE',
+  });
+}
+
 export async function queryAll() {
   return request('/api/v1/device/query_all', {
     method: 'GET',

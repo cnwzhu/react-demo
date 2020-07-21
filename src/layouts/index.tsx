@@ -1,4 +1,4 @@
-import { Avatar, Layout, Menu } from 'antd';
+import { Avatar, Layout, Menu, Popover } from 'antd';
 import * as Icon from '@ant-design/icons';
 import { UserOutlined } from '@ant-design/icons';
 import React from 'react';
@@ -20,10 +20,10 @@ class DemoLayout extends React.Component<any, any> {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
-          collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
           style={{ width: 100 }}
+          collapsible={false}
         >
           {this.state.collapsed ?
             (
@@ -69,15 +69,17 @@ class DemoLayout extends React.Component<any, any> {
             }}
           >
             <div>
-              <Avatar
-                icon={<UserOutlined/>}
-              />
+              <Popover placement="left" content={'张三'}>
+                <Avatar
+                  icon={<UserOutlined/>}
+                />
+              </Popover>
             </div>
           </Header>
           <Content style={{ margin: '16px 16px 0' }}>
             <div
               className="site-layout-background"
-              style={{ padding: 24, height: '100%' }}
+              style={{ padding: 24, height: '100%', borderRadius: '8px' }}
             >
               {this.props.children}
             </div>

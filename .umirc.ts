@@ -16,12 +16,6 @@ export default defineConfig({
     default: 'zh-CN',
     antd: true,
   },
-  proxy: {
-    '/api': {
-      target: 'http://localhost:9090',
-      changeOrigin: true,
-    },
-  },
   routes: [
     {
       path: '/',
