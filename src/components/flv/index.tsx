@@ -40,13 +40,19 @@ export default class Flv extends React.Component<FlvProps, {}> {
   }
 
   componentDidMount() {
-    const videoElement = window.document.getElementById(this.props.videoId);
-    this.flvPlayer.attachMediaElement(videoElement as HTMLMediaElement);
-    this.flvPlayer.load();
-    this.flvPlayer.play();
+    try {
+      const videoElement = window.document.getElementById(this.props.videoId);
+      this.flvPlayer.attachMediaElement(videoElement as HTMLMediaElement);
+      this.flvPlayer.load();
+      this.flvPlayer.play();
+    } catch (e) {
+      console.log('视频打开失败');
+    }
   }
 
   componentWillUnmount() {
+    this.flvPlayer.detachMediaElement();
+    this.flvPlayer.unload();
     this.flvPlayer.destroy();
   }
 }

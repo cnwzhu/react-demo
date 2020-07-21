@@ -38,10 +38,10 @@ interface DeviceModelType {
     deviceItems: DeviceItem[]
   },
   effects: {
-    pageQuery: Effect
+    pageQuery: Effect,
   }
   reducers: {
-    _pageQuery: Reducer
+    _pageQuery: Reducer,
     showEdit: Reducer
     closeEdit: Reducer
   }

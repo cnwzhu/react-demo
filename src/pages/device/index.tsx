@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect, Loading } from 'umi';
-import { Button, Divider, Modal, Table, Tooltip } from 'antd';
+import { Button, Divider, Modal, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table/interface';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import DeviceSaveForm from '@/pages/device/form/save';
 import DeviceQueryForm from '@/pages/device/form/query';
 
@@ -57,36 +56,29 @@ class DevicePage extends React.Component<any, any> {
         title: '操作',
         key: 'watch',
         render: (record) => {
-          return <div>
-            <Tooltip title="删除">
-              <DeleteOutlined
-                style={{ fontSize: '20px' }}
-                onClick={() => {
-                  Modal.confirm(
-                    {
-                      title: '警告',
-                      content: '确定删除吗',
-                      onOk: () => {
-                        this.props.delete(record.id);
-                      },
-                      okText: '确定',
-                      cancelText: '取消',
-                    },
-                  );
-                }}/>
-            </Tooltip>
-            <Tooltip title="编辑">
-              <EditOutlined
-                style={{ fontSize: '20px', marginLeft: '5px' }}
-                onClick={() => {
-                  this.props.dispatch({
-                    type: 'device/showEdit',
-                    payload: record,
-                  });
-                }}>
-              </EditOutlined>
-            </Tooltip>
-          </div>;
+          return <Space size="middle">
+            <a onClick={() => {
+              Modal.confirm(
+                {
+                  title: '警告',
+                  content: '确定删除吗',
+                  onOk: () => {
+                    this.props.delete(record.id);
+                  },
+                  okText: '确定',
+                  cancelText: '取消',
+                },
+              );
+            }}> 删除 </a>
+            <a onClick={() => {
+              this.props.dispatch({
+                type: 'device/showEdit',
+                payload: record,
+              });
+            }}>
+              编辑
+            </a>
+          </Space>;
         },
       },
     ];
@@ -95,7 +87,7 @@ class DevicePage extends React.Component<any, any> {
   render() {
     return (
       <div>
-        <div style={{ display: 'flex', justifyContent: 'start' }}>
+        <Space size="small">
           <Button onClick={() => {
             this.props.dispatch({
               type: 'device/showEdit',
@@ -113,13 +105,13 @@ class DevicePage extends React.Component<any, any> {
 
             }}
           />
-        </div>
+        </Space>
         <Divider/>
         <Table
           columns={this.columns}
           dataSource={this.props.deviceItems}
           loading={this.props.loading}
-        />;
+        />
         {this.props.deviceEditVisible ?
           <DeviceSaveForm
             add={(value: any) => {

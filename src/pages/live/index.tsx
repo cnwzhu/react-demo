@@ -64,13 +64,13 @@ class LivePage extends React.Component<any, any> {
               title="直播"
               visible={this.props.liveVideoVisible}
               closable={true}
+              destroyOnClose={true}
+              footer={null}
               onCancel={()=>{
                 this.props.dispatch({
                   type: 'live/closeVideo',
                 });
               }}
-              destroyOnClose={true}
-              footer={null}
             >
               <Flv videoId={this.props.videoRecord.stream}
                    videoRef={this.props.videoRecord.stream}

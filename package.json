@@ -28,6 +28,7 @@
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
+    "react-amap": "^1.2.8",
     "react-dom": "^16.12.0",
     "umi": "^3.2.10",
     "video.js": "^7.8.4",

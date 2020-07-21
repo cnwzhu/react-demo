@@ -1,5 +1,5 @@
 import React, { Ref } from 'react';
-import { Button, DatePicker, Form, Select } from 'antd';
+import { Button, DatePicker, Form, Select, Space } from 'antd';
 
 interface Props {
   deviceQueryParam: {
@@ -28,7 +28,7 @@ export default class DeviceQueryForm extends React.Component<Props, any> {
         onFinish={this.props.query}
         ref={this.formRef}
         layout="inline">
-        <div style={{ display: 'flex', justifySelf: 'start' }}>
+        <Space size="small">
           <Form.Item
             label="是否在线"
             name="onlineState"
@@ -58,7 +58,6 @@ export default class DeviceQueryForm extends React.Component<Props, any> {
           >
             <DatePicker.RangePicker/>
           </Form.Item>
-        </div>
         <div style={{ display: 'flex', justifySelf: 'end' }}>
           <Form.Item>
             <Button type={'primary'} htmlType={'submit'}>
@@ -74,6 +73,8 @@ export default class DeviceQueryForm extends React.Component<Props, any> {
             </Button>
           </Form.Item>
         </div>
+        </Space>
+
       </Form>
     );
   }
