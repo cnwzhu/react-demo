@@ -1,5 +1,5 @@
 import React from 'react';
-import video from 'video.js';
+import videojs from 'video.js';
 
 interface HlsProps {
   videoId: string
@@ -8,9 +8,9 @@ interface HlsProps {
 }
 
 export default class Hls extends React.Component<HlsProps, {}> {
-  private player?: video.Player;
-  private readonly playerOptions: video.PlayerOptions;
-  private readonly source: video.Tech.SourceObject;
+  private player?: videojs.Player;
+  private readonly playerOptions: videojs.PlayerOptions;
+  private readonly source: videojs.Tech.SourceObject;
 
   constructor(props: HlsProps) {
     super(props);
@@ -35,7 +35,7 @@ export default class Hls extends React.Component<HlsProps, {}> {
   }
 
   componentDidMount() {
-    this.player = video(this.props.videoId, this.playerOptions);
+    this.player = videojs(this.props.videoId, this.playerOptions);
     this.player.src(this.source);
   }
 

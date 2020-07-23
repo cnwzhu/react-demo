@@ -16,6 +16,13 @@ export default defineConfig({
     default: 'zh-CN',
     antd: true,
   },
+  externals: {
+    'react': 'window.React',
+    'react-dom': 'window.ReactDOM',
+    'react-amap': 'window.ReactAMAP',
+    'flv.js':'window.flvjs',
+    'video.js':'window.videojs'
+  },
   routes: [
     {
       path: '/',
