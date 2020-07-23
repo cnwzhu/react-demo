@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect, Loading } from 'umi';
-import { Button, Modal, Table, Tooltip } from 'antd';
+import { Modal, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table/interface';
-import { YoutubeOutlined } from '@ant-design/icons';
 import Flv from '@/components/flv';
 
 class LivePage extends React.Component<any, any> {
@@ -12,40 +11,73 @@ class LivePage extends React.Component<any, any> {
     super(props);
     this.columns = [
       {
-        title: '应用',
-        dataIndex: 'app',
-        key: 'app',
+        title: '设备号',
+        dataIndex: 'deviceId',
+        key: 'deviceId',
       },
       {
         title: '推流码',
-        dataIndex: 'stream',
-        key: 'stream',
+        dataIndex: 'streamCode',
+        key: 'streamCode',
       },
       {
-        title: '状态',
-        dataIndex: 'pushFlag',
-        key: 'pushFlag',
+        title: '正常推流状态',
+        dataIndex: 'ordinary',
+        key: 'ordinaryPushFlag',
         render: (record) => {
-          return record === 1 ? '在线' : '离线';
+          return record.push_flag === 1 ? '推流' : '离线';
+        },
+      },
+      {
+        title: '红外推流状态',
+        dataIndex: 'infrared',
+        key: 'infraredPushFlag',
+        render: (record) => {
+          return record.push_flag === 1 ? '推流' : '离线';
         },
       },
       {
         title: '查看',
         key: 'watch',
         render: (record) => {
-          return <div>
-            <Tooltip title="查看">
-              <Button type="primary" shape="circle" icon={<YoutubeOutlined/>}
-                      disabled={record.pushFlag !== 1}
-                      onClick={() => {
-                        this.props.dispatch({
-                          type: 'live/openVideo',
-                          payload: record,
-                        });
-                      }}
-              />
-            </Tooltip>
-          </div>;
+          return <Space size="middle">
+            <a onClick={() => {
+              if (record.ordinary.push_flag === 1) {
+                this.props.dispatch({
+                  type: 'live/openVideo',
+                  payload: {
+                    vhost: record.ordinary.vhost,
+                    app: record.ordinary.app,
+                    stream: record.streamCode,
+                  },
+                });
+              } else {
+                Modal.error({
+                  title: '警告',
+                  content: '设备未推流',
+                });
+              }
+            }}> 普通 </a>
+            <a style={{ color: 'red' }} onClick={() => {
+              if (record.infrared.push_flag === 1) {
+                this.props.dispatch({
+                  type: 'live/openVideo',
+                  payload: {
+                    vhost: record.infrared.vhost,
+                    app: record.infrared.app,
+                    stream: record.streamCode,
+                  },
+                });
+              } else {
+                Modal.error({
+                  title: '警告',
+                  content: '设备未推流',
+                });
+              }
+            }}>
+              红外
+            </a>
+          </Space>;
         },
       },
     ];
@@ -66,7 +98,7 @@ class LivePage extends React.Component<any, any> {
               closable={true}
               destroyOnClose={true}
               footer={null}
-              onCancel={()=>{
+              onCancel={() => {
                 this.props.dispatch({
                   type: 'live/closeVideo',
                 });

@@ -13,18 +13,13 @@ class DevicePage extends React.Component<any, any> {
     this.columns = [
       {
         title: '设备id',
-        dataIndex: 'name',
+        dataIndex: 'deviceId',
         key: 'name',
       },
       {
         title: '正常推流码',
-        dataIndex: 'commonCode',
+        dataIndex: 'streamCode',
         key: 'commonCode',
-      },
-      {
-        title: '红外推流码',
-        dataIndex: 'infraredCode',
-        key: 'infraredCode',
       },
       {
         title: '在线',
@@ -129,9 +124,8 @@ class DevicePage extends React.Component<any, any> {
                 type: 'device/save',
                 payload: {
                   id: value.id,
-                  common_code: value.commonCode,
-                  infrared_code: value.infraredCode,
-                  name: value.name,
+                  stream_code: value.streamCode,
+                  device_id: value.deviceId,
                 },
               });
             }}

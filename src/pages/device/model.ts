@@ -11,10 +11,9 @@ interface DeviceState {
 interface DeviceItem {
   key: number,
   id: number
-  commonCode: string
-  infraredCode: string
+  streamCode: string
   locationInfo?: any
-  name: string
+  deviceId: string
   offlineFlag: number
   pushFlag: number
   createdAt: string
@@ -23,10 +22,9 @@ interface DeviceItem {
 
 interface _DeviceItem {
   id: number,
-  common_code: string
-  infrared_code: string
+  stream_code: string
   location_info?: any
-  name: string
+  device_id: string
   offline_flag: number
   push_flag: number
   created_at: string
@@ -102,10 +100,9 @@ const DeviceModel: DeviceModelType = {
           return {
             key: it.id,
             id: it.id,
-            commonCode: it.common_code,
-            infraredCode: it.infrared_code,
+            streamCode: it.stream_code,
             locationInfo: null,
-            name: it.name,
+            deviceId: it.device_id,
             offlineFlag: it.offline_flag,
             pushFlag: it.push_flag,
             createdAt: it.created_at,

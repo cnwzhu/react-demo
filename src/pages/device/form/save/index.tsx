@@ -56,8 +56,8 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
           </Form.Item>
           <Form.Item
             label="设备id"
-            name="name"
-            initialValue={detail.name}
+            name="deviceId"
+            initialValue={detail.deviceId}
             rules={[
               {
                 required: true,
@@ -69,8 +69,8 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
           </Form.Item>
           <Form.Item
             label="正常推码流"
-            name="commonCode"
-            initialValue={detail.commonCode}
+            name="streamCode"
+            initialValue={detail.streamCode}
             rules={[
               {
                 required: true,
@@ -80,20 +80,6 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
           >
             <Input/>
           </Form.Item>
-          <Form.Item
-            label="红外推码流"
-            name="infraredCode"
-            initialValue={detail.infraredCode}
-            rules={[
-              {
-                required: true,
-                message: '红外推码流不能为空',
-              },
-            ]}
-          >
-            <Input/>
-          </Form.Item>
-
           <Form.Item {...tailLayout} >
             <Button type="primary" htmlType="submit">
               提交

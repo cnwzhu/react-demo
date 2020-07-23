@@ -9,30 +9,20 @@ interface LiveState {
 interface LiveItem {
   key: number,
   'id': number,
-  'action': string,
-  'clientId': number,
-  'clientName'?: string,
-  'ip'?: string,
-  'vhost': string,
-  'app': string,
-  'stream': string,
+  'deviceId': number,
+  'streamCode': string,
   'pushFlag': number,
-  'pushSDate': string,
-  'pushEDate': string
+  'ordinary': {}
+  'infrared': {}
 }
 
 interface _LiveItem {
   'id': number,
-  'action': string,
-  'client_id': number,
-  'client_name'?: string,
-  'ip'?: string,
-  'vhost': string,
-  'app': string,
-  'stream': string,
+  'device_id': string,
+  'stream_code': string,
   'push_flag': number,
-  'push_sdate': string,
-  'push_edate': string
+  'ordinary': {}
+  'infrared': {}
 }
 
 interface LiveModelType {
@@ -75,16 +65,11 @@ const LiveModel: LiveModelType = {
           return {
             key: it.id,
             id: it.id,
-            action: it.action,
-            clientId: it.client_id,
-            clientName: it.client_name,
-            ip: it.ip,
-            vhost: it.vhost,
-            app: it.app,
-            stream: it.stream,
+            deviceId: it.device_id,
+            streamCode: it.stream_code,
             pushFlag: it.push_flag,
-            pushSDate: it.push_sdate,
-            pushEDate: it.push_edate,
+            ordinary: it.ordinary,
+            infrared: it.infrared,
           };
         }),
       };
