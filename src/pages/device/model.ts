@@ -76,27 +76,19 @@ const DeviceModel: DeviceModelType = {
       });
     },
     * save({ payload }, { call, put }) {
-      const ret = yield call(save, {
+      yield call(save, {
         ...payload,
       });
-      if (ret.state === 200) {
-        message.success('保存成功');
-      } else {
-        message.error('保存失败');
-      }
+      message.success('保存成功');
       yield put({
         type: 'pageQuery',
       });
     },
     * del({ payload }, { call, put }) {
-      const ret = yield call(del, {
+      yield call(del, {
         ...payload,
       });
-      if (ret.state === 200) {
-        message.success('删除成功');
-      } else {
-        message.error('删除失败');
-      }
+      message.success('删除成功');
       yield put({
         type: 'pageQuery',
       });

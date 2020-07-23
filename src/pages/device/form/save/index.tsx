@@ -55,7 +55,7 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
             <Input/>
           </Form.Item>
           <Form.Item
-            label="名称"
+            label="设备id"
             name="name"
             initialValue={detail.name}
             rules={[

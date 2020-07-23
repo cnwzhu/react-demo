@@ -1,5 +1,5 @@
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { message } from 'antd';
 
 
 const codeMessage: any = {
@@ -29,10 +29,7 @@ const errorHandler = (error: any) => {
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
-    notification.error({
-      message: `请求错误 ${status}: ${url}`,
-      description: errorText,
-    });
+    message.error(`请求错误 ${status}: ${url}`);
   }
 
   return response;

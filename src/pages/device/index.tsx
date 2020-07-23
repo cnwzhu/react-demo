@@ -12,7 +12,7 @@ class DevicePage extends React.Component<any, any> {
     super(props);
     this.columns = [
       {
-        title: '名称',
+        title: '设备id',
         dataIndex: 'name',
         key: 'name',
       },
