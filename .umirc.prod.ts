@@ -4,6 +4,14 @@ export default defineConfig({
   define: {
     'FLV_BASE_URL': 'http://117.83.178.146:18080/live',
   },
+  dynamicImport: {},
+  externals: {
+    'react': 'window.React',
+    'react-dom': 'window.ReactDOM',
+    'react-amap': 'window.ReactAMAP',
+    'flv.js':'window.flvjs',
+    'video.js':'window.videojs'
+  },
   scripts:[
     'https://gw.alipayobjects.com/os/lib/react/16.12.0/umd/react.production.min.js',
     'https://gw.alipayobjects.com/os/lib/react-dom/16.12.0/umd/react-dom.production.min.js',

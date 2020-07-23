@@ -87,7 +87,7 @@ class MapPage extends React.Component<any, any> {
              center={this.mapCenter}
              amapkey={'5ed31dcef8805f7574cf3d7247cb9cbe'}>
           <Markers
-            markers={allDevice.map((it: any) => ({
+            markers={allDevice.filter((it:any)=>it.locationInfo!==null).map((it: any) => ({
               position: {
                 longitude: it.locationInfo.lng,
                 latitude: it.locationInfo.lat,

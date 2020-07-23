@@ -11,17 +11,9 @@ export default defineConfig({
   antd: {
     compact: false,
   },
-  dynamicImport: {},
   locale: {
     default: 'zh-CN',
     antd: true,
-  },
-  externals: {
-    'react': 'window.React',
-    'react-dom': 'window.ReactDOM',
-    'react-amap': 'window.ReactAMAP',
-    'flv.js':'window.flvjs',
-    'video.js':'window.videojs'
   },
   routes: [
     {
