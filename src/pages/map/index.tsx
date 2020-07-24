@@ -21,7 +21,7 @@ class MapPage extends React.Component<any, any> {
     this.markersEvents = {
       click: (MapsOption: any, marker: any) => {
         const data = marker.B.extData.extData;
-
+        console.log(`${flvBaseUrl}/${data.streamCode}.flv`)
         if (data.pushFlag === 1) {
           ReactDOM.render(
             <Modal visible={true}
@@ -32,10 +32,10 @@ class MapPage extends React.Component<any, any> {
                    onCancel={() => {
                      ReactDOM.unmountComponentAtNode(this.container);
                    }}>
-              <Flv videoId={data.commonCode}
-                   videoRef={data.commonCode}
+              <Flv videoId={data.streamCode}
+                   videoRef={data.streamCode}
                    controls={true}
-                   videoUrl={`${flvBaseUrl}/${data.commonCode}.flv`}
+                   videoUrl={`${flvBaseUrl}/${data.streamCode}.flv`}
               />
             </Modal>, this.container);
         } else {

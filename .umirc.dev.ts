@@ -8,7 +8,7 @@ export default defineConfig({
     },
   },
   define: {
-    'FLV_BASE_URL': 'http://192.168.31.67:18080/live',
+    'FLV_BASE_URL': 'http://192.168.31.67:18080/ordinary',
   },
   scripts: [
 /*    'https://gw.alipayobjects.com/os/lib/react/16.12.0/umd/react.development.js',

@@ -47,10 +47,10 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
           onFinish={onFinish}
         >
           <Form.Item
+            hidden={true}
             label="id"
             name="id"
             initialValue={detail.id}
-            hidden={true}
           >
             <Input/>
           </Form.Item>
@@ -68,7 +68,7 @@ export default class DeviceSaveForm extends React.Component<Props, any> {
             <Input/>
           </Form.Item>
           <Form.Item
-            label="正常推码流"
+            label="推流码"
             name="streamCode"
             initialValue={detail.streamCode}
             rules={[

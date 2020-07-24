@@ -40,6 +40,7 @@ const MapModel: LiveModelType = {
       });
     },
   },
+
   reducers: {
     _queryAll(state: any, { payload }) {
       return {
@@ -48,10 +49,9 @@ const MapModel: LiveModelType = {
           return {
             key: it.id,
             id: it.id,
-            commonCode: it.common_code,
-            infraredCode: it.infrared_code,
+            deviceId: it.device_id,
+            streamCode: it.stream_code,
             locationInfo: it.location_info,
-            name: it.name,
             offlineFlag: it.offline_flag,
             pushFlag: it.push_flag,
             createdAt: it.created_at,
