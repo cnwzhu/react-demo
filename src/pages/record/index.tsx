@@ -58,6 +58,10 @@ class RecordPage extends React.Component<any, any> {
           columns={this.columns}
           loading={this.props.loading}
           dataSource={this.props.recordItems}
+          pagination={{
+            total: 100,
+
+          }}
         />
         {
           this.props.recordVideoVisible ? (

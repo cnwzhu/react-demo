@@ -1,6 +1,5 @@
 import { Effect, Reducer, Subscription } from '@@/plugin-dva/connect';
 import { del, pageQuery, save } from '@/pages/device/service';
-import { message } from 'antd';
 
 
 interface DeviceState {
@@ -45,6 +44,8 @@ interface DeviceModelType {
     _pageQuery: Reducer,
     showEdit: Reducer
     closeEdit: Reducer
+    queryParamChange: Reducer
+    queryParamReset: Reducer
   }
   subscriptions: {
     setup: Subscription
@@ -58,12 +59,13 @@ const DeviceModel: DeviceModelType = {
   },
   effects: {
     * pageQuery({ payload }, { call, put }) {
+      const pageable = payload && payload.pageable ? payload.pageable : {
+        page: 1,
+        page_count: 10,
+      };
       const ret = yield call(pageQuery, {
         ...payload,
-        pageable: {
-          page: 1,
-          page_count: 10,
-        },
+        pageable: pageable,
       });
       yield put({
         type: 'closeEdit',
@@ -77,7 +79,6 @@ const DeviceModel: DeviceModelType = {
       yield call(save, {
         ...payload,
       });
-      message.success('保存成功');
       yield put({
         type: 'pageQuery',
       });
@@ -86,7 +87,6 @@ const DeviceModel: DeviceModelType = {
       yield call(del, {
         ...payload,
       });
-      message.success('删除成功');
       yield put({
         type: 'pageQuery',
       });
@@ -109,6 +109,13 @@ const DeviceModel: DeviceModelType = {
             updatedAt: it.updated_at,
           };
         }),
+        page: {
+          current: payload.current,
+          orders: payload.order,
+          pages: payload.pages,
+          size: payload.size,
+          total: payload.total,
+        },
       };
     },
     showEdit(state: DeviceState, { payload }) {
@@ -123,6 +130,18 @@ const DeviceModel: DeviceModelType = {
         ...state,
         deviceEditVisible: false,
         deviceDetail: null,
+      };
+    },
+    queryParamChange(state: DeviceState, { payload }) {
+      return {
+        ...state,
+        queryParam: { ...payload },
+      };
+    },
+    queryParamReset(state: DeviceState, { payload }) {
+      return {
+        ...state,
+        queryParam: {},
       };
     },
   },

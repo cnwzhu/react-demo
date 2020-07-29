@@ -5,7 +5,7 @@ export default defineConfig({
     'FLV_BASE_URL': 'http://117.83.178.146:18080/ordinary',
   },
   chunks: ['umi'],
-  externals: {
+/*  externals: {
     'react': 'window.React',
     'react-dom': 'window.ReactDOM',
     'react-amap': 'window.ReactAMAP',
@@ -19,5 +19,5 @@ export default defineConfig({
     'https://libs.cdnjs.net/flv.js/1.5.0/flv.min.js',
     'https://libs.cdnjs.net/video.js/7.8.4/video-js.min.css',
     'https://libs.cdnjs.net/video.js/7.8.4/video.min.js',
-  ],
+  ],*/
 });

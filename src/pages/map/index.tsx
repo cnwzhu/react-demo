@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Map, Markers } from 'react-amap';
 import { Loading } from '@@/plugin-dva/connect';
 import { connect } from 'umi';
-import { Card, Col, Divider, Modal, Row } from 'antd';
+import { Card, Col, Divider, Modal, Row, Tabs } from 'antd';
 import Flv from '@/components/flv';
 
 class MapPage extends React.Component<any, any> {
@@ -21,22 +21,35 @@ class MapPage extends React.Component<any, any> {
     this.markersEvents = {
       click: (MapsOption: any, marker: any) => {
         const data = marker.B.extData.extData;
-        console.log(`${flvBaseUrl}/${data.streamCode}.flv`)
+        const o = data.streamCode + '0';
+        const i = data.streamCode + 'i';
         if (data.pushFlag === 1) {
           ReactDOM.render(
             <Modal visible={true}
-                   title="直播"
+                   title={null}
                    closable={true}
                    destroyOnClose={true}
                    footer={null}
                    onCancel={() => {
                      ReactDOM.unmountComponentAtNode(this.container);
                    }}>
-              <Flv videoId={data.streamCode}
-                   videoRef={data.streamCode}
-                   controls={true}
-                   videoUrl={`${flvBaseUrl}/${data.streamCode}.flv`}
-              />
+              <Tabs defaultActiveKey="1" tabPosition={'top'} size={'small'} destroyInactiveTabPane>
+                <Tabs.TabPane tab={'普通'} key={'1'}>
+                  <Flv videoId={o}
+                       videoRef={o}
+                       controls={true}
+                       videoUrl={`${flvBaseUrl}/ordinary/${data.streamCode}.flv`}
+                  />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab={'红外'} key={'2'}>
+                  <Flv videoId={i}
+                       videoRef={i}
+                       controls={true}
+                       videoUrl={`${flvBaseUrl}/infrared/${data.streamCode}.flv`}
+                  />
+                </Tabs.TabPane>
+
+              </Tabs>
             </Modal>, this.container);
         } else {
           Modal.error({

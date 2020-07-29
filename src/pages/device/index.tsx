@@ -1,11 +1,21 @@
 import React from 'react';
 import { connect, Loading } from 'umi';
-import { Button, Divider, Modal, Space, Table } from 'antd';
+import { Divider, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table/interface';
 import DeviceSaveForm from '@/pages/device/form/save';
-import DeviceQueryForm from '@/pages/device/form/query';
+import Header from '@/pages/device/header';
 
-class DevicePage extends React.Component<any, any> {
+interface Props {
+  dispatch: any
+  page: Page
+  deviceItems: any
+  loading: boolean
+  deviceEditVisible: any
+  deviceDetail: any
+  queryParam: any
+}
+
+class DevicePage extends React.Component<Props, any> {
   private readonly columns: ColumnsType<any>;
 
   constructor(props: any) {
@@ -52,7 +62,7 @@ class DevicePage extends React.Component<any, any> {
         key: 'watch',
         render: (record) => {
           return <Space size="middle">
-            <a style={{ color: 'red' }} onClick={() => {
+            {/*        <a style={{ color: 'red' }} onClick={() => {
               Modal.confirm(
                 {
                   title: '警告',
@@ -69,7 +79,7 @@ class DevicePage extends React.Component<any, any> {
                   cancelText: '取消',
                 },
               );
-            }}> 删除 </a>
+            }}> 删除 </a>*/}
             <a onClick={() => {
               this.props.dispatch({
                 type: 'device/showEdit',
@@ -84,38 +94,65 @@ class DevicePage extends React.Component<any, any> {
     ];
   }
 
+  pageQuery = () => {
+    const param = this.props.queryParam ? this.props.queryParam : {};
+    console.log(param);
+    this.props.dispatch({
+      type: 'device/pageQuery',
+      payload: {
+        online_state: param.onlineState,
+        push_state: param.pushState,
+        device_add_date_start: !param.dateRange ? null : param.dateRange[0] ? param.dateRange[0].format('yyyy-MM-DD') : null,
+        device_add_date_end: !param.dateRange ? null : param.dateRange[1] ? param.dateRange[1].format('yyyy-MM-DD') : null,
+        pageable: param.pageable,
+      },
+    });
+  };
+
+  queryParamChange = (v: any) => {
+    this.props.dispatch({
+      type: 'device/queryParamChange',
+      payload: {
+        ...this.props.queryParam,
+        ...v,
+      },
+    });
+  };
+
   render() {
+    const page = this.props.page ? this.props.page : {
+      total: 0,
+      pageSize: 0,
+      current: 0,
+      size: 0,
+    };
+    const queryParam = this.props.queryParam ? this.props.queryParam : {};
     return (
       <div>
-        <Space size="small">
-          <Button onClick={() => {
-            this.props.dispatch({
-              type: 'device/showEdit',
-            });
-          }}>
-            添加
-          </Button>
-          <DeviceQueryForm
-            query={(value: any) => {
-              this.props.dispatch({
-                type: 'device/pageQuery',
-                payload: {
-                  online_state: value.onlineState,
-                  push_state: value.pushState,
-                  device_add_date_start: !value.dateRange ? null : value.dateRange[0] ? value.dateRange[0].format('yyyy-MM-DD') : null,
-                  device_add_date_end: !value.dateRange ? null : value.dateRange[1] ? value.dateRange[1].format('yyyy-MM-DD') : null,
-                },
-              });
-            }}
-            reset={() => this.props.dispatch({
-              type: 'device/pageQuery',
-            })}/>
-        </Space>
+        <Header
+          query={this.pageQuery}
+          reset={() => {
+            this.props.dispatch({ type: 'device/queryParamReset' });
+            this.props.dispatch({ type: 'device/pageQuery' });
+          }}
+          onchange={(v) => this.queryParamChange(v)}
+          queryParam={queryParam}
+          showEdit={() => this.props.dispatch({ type: 'device/showEdit' })}/>
         <Divider/>
         <Table
           columns={this.columns}
           dataSource={this.props.deviceItems}
           loading={this.props.loading}
+          pagination={{
+            total: page.total,
+            pageSize: page.size,
+            current: page.current,
+            onChange: (page, pageSize) => {
+              this.queryParamChange({
+                pageable: { page: page, page_count: pageSize },
+              });
+            },
+          }}
         />
         {this.props.deviceEditVisible ?
           <DeviceSaveForm
