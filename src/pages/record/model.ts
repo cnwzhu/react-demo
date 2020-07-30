@@ -52,7 +52,9 @@ interface RecordModelType {
   reducers: {
     _pageQuery: Reducer,
     openVideo: Reducer,
-    closeVideo: Reducer
+    closeVideo: Reducer,
+    queryParamChange: Reducer
+    queryParamReset: Reducer
   }
   subscriptions: {
     setup: Subscription
@@ -66,7 +68,7 @@ const RecordModel: RecordModelType = {
   },
   effects: {
     * pageQuery({ payload }, { call, put }) {
-      const ret = yield call(pageQuery, {});
+      const ret = yield call(pageQuery, {...payload});
       yield put({
         type: '_pageQuery',
         payload: ret.data,
@@ -77,7 +79,7 @@ const RecordModel: RecordModelType = {
     _pageQuery(state: RecordState, { payload }) {
       return {
         ...state,
-        recordItems: payload.map((it: _RecordItem) => {
+        recordItems: payload.records.map((it: _RecordItem) => {
           return {
             key: it.id,
             id: it.id,
@@ -96,6 +98,13 @@ const RecordModel: RecordModelType = {
             endTs: it.end_ts,
           };
         }),
+        page: {
+          current: payload.current,
+          orders: payload.order,
+          pages: payload.pages,
+          size: payload.size,
+          total: payload.total,
+        },
       };
     },
     openVideo(state: RecordState, { payload }) {
@@ -111,6 +120,18 @@ const RecordModel: RecordModelType = {
         ...state,
         recordVideoVisible: false,
         videoRecord: null,
+      };
+    },
+    queryParamChange(state: RecordState, { payload }) {
+      return {
+        ...state,
+        queryParam: { ...payload },
+      };
+    },
+    queryParamReset(state: RecordState, { payload }) {
+      return {
+        ...state,
+        queryParam: {},
       };
     },
   },

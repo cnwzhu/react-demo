@@ -59,13 +59,8 @@ const DeviceModel: DeviceModelType = {
   },
   effects: {
     * pageQuery({ payload }, { call, put }) {
-      const pageable = payload && payload.pageable ? payload.pageable : {
-        page: 1,
-        page_count: 10,
-      };
       const ret = yield call(pageQuery, {
         ...payload,
-        pageable: pageable,
       });
       yield put({
         type: 'closeEdit',
